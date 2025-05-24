@@ -18,7 +18,6 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	data := loginRequest{}
 	err := json.NewDecoder(r.Body).Decode(&data)
-
 	if err != nil {
 		json.NewEncoder(w).Encode(map[string]any{
 			"success": false,

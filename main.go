@@ -17,9 +17,10 @@ func main() {
 	if err != nil {
 		log.Fatal("Failed to connect to the database: ", err)
 	}
-	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.User{}, &models.Meal{})
 
 	r := chi.NewRouter()
+
 	api.AddRoutes(r, db)
 
 	log.Println("Server started")

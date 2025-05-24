@@ -7,10 +7,10 @@ import (
 type User struct {
 	ID       uint   `gorm:"primaryKey"`
 	Username string `gorm:"uniqueIndex;not null"`
-	// TODO: Add pfp
 	Email    string `gorm:"uniqueIndex;not null"`
 	Password string `gorm:"not null"`
-	// Reviews
+	HostedMeals []Meal `gorm:"foreignKey:HostId;references:ID"`
+	ReservedMeals []*Meal `gorm:"many2many:user_meals;"`
 }
 
 func (u *User) SetPassword(rawPassword string) error {
