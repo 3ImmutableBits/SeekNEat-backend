@@ -27,15 +27,25 @@ func changeUserHandler(w http.ResponseWriter, r *http.Request) {
 	_, claims, _ := jwtauth.FromContext(r.Context())
 	db.Where("ID = ?", claims["userId"]).First(&u)
 
+	flag := false
+
 	if data.Username != "" {
+		flag = true
 		u.Username = data.Username
 	}
 	if data.Email != "" {
+		flag = true
 		u.Email = data.Email
 	}
 	if data.Password != "" {
+		flag = true
 		u.SetPassword(data.Password)
 	}
+
+	if !flag {
+		sendError("All fields are empty", w)
+	}
+
 	result := db.Save(&u)
 
 	if result.Error != nil {

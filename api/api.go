@@ -74,6 +74,13 @@ func AddRoutes(appRouter chi.Router, dbLocal *gorm.DB) {
 		r.Post("/fetch_meal", fetchMealHandler)
 		r.Post("/delete_meal", deleteMealHandler)
 		r.Post("/change_user", changeUserHandler)
+		r.Get("/validate_token", func(w http.ResponseWriter, r *http.Request) {
+			json.NewEncoder(w).Encode(map[string]any{
+				"success": true,
+				"error":   "",
+			})
+
+		})
 	})
 
 	r.Post("/login", loginHandler)
